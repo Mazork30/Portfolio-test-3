@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiller Lozano — Product & UX/UI Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        canvas: '#F2F2F0',
+                        cardBlue: '#E1EFFA',
+                        cardBlueHover: '#D4E8F8',
+                        brandBlue: '#0F5482',
+                        brandBlueDark: '#0A3B5C',
+                        accentTerra: '#C84B28',
+                        ink: '#18181B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F2F2F0;
+            color: #18181B;
+        }
+        .framer-stack-hint {
+            transition: all 0.2s ease;
+        }
+        .xray-mode .framer-stack {
+            outline: 1.5px dashed #0F5482;
+            position: relative;
+        }
+        .xray-mode .framer-stack::before {
+            content: attr(data-stack);
+            position: absolute;
+            top: -10px;
+            right: 12px;
+            background: #0F5482;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            z-index: 30;
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brandBlue selection:text-white min-h-screen flex flex-col">
+
+    <!-- Sticky Navbar -->
+    <header class="sticky top-0 z-40 bg-[#F2F2F0]/90 backdrop-blur-md border-b border-zinc-300/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between framer-stack" data-stack="Stack Horizontal | Space Between">
+            <button onclick="showHome()" class="font-serif text-2xl sm:text-3xl tracking-tight text-ink hover:text-accentTerra transition-colors text-left">
+                Hiller Lozano
+            </button>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-700">
+                <button onclick="navigateToSection('projects-section')" class="hover:text-brandBlue transition-colors" data-i18n="nav_projects">Proyectos</button>
+                <button onclick="navigateToSection('about-section')" class="hover:text-brandBlue transition-colors" data-i18n="nav_about">Sobre mí</button>
+                <button onclick="navigateToSection('experience-section')" class="hover:text-brandBlue transition-colors" data-i18n="nav_Trajectory">Trayectoria</button>
+                <button onclick="openCVModal()" class="hover:text-brandBlue transition-colors" data-i18n="nav_cv">CV</button>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <!-- Framer Layout Inspector Button -->
+                <button id="xray-btn" onclick="toggleXray()" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-full border border-zinc-400 text-zinc-700 hover:bg-zinc-200 transition-colors" title="Ver estructura de Stacks para Framer">
+                    <span class="w-2 h-2 rounded-full bg-brandBlue"></span>
+                    <span id="xray-label">Guía Auto Layout: OFF</span>
+                </button>
+
+                <!-- Language Switcher (ES | EN) matching Figma prototype -->
+                <div class="inline-flex rounded-lg border border-zinc-800 overflow-hidden text-xs font-mono">
+                    <button id="btn-es" onclick="setLanguage('es')" class="px-2.5 py-1.5 bg-zinc-900 text-white font-medium transition-colors">ES</button>
+                    <button id="btn-en" onclick="setLanguage('en')" class="px-2.5 py-1.5 bg-transparent text-zinc-800 hover:bg-zinc-200 transition-colors">EN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <div id="home-view" class="max-w-6xl mx-auto px-4 sm:px-8 py-12 sm:py-20 space-y-24">
+
+            <!-- HERO SECTION -->
+            <section class="max-w-4xl space-y-6 framer-stack p-2 rounded-2xl" data-stack="Stack Vertical | Max-W 900px | Gap 24px">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-zinc-300 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-accentTerra"></span>
+                    <span class="font-mono text-xs sm:text-sm text-zinc-800 font-medium" data-i18n="hero_badge">Diseñador de Producto | UX/UI</span>
+                </div>
+
+                <h1 class="font-serif text-5xl sm:text-7xl leading-[1.05] tracking-tight text-ink">
+                    <span data-i18n="hero_title_1">Del boceto al</span>
+                    <span class="text-accentTerra italic" data-i18n="hero_title_highlight">prototipo funcional:</span>
+                    <span data-i18n="hero_title_2">diseño estratégico para resolver problemas reales.</span>
+                </h1>
+
+                <p class="font-mono text-sm sm:text-base text-zinc-700 leading-relaxed max-w-3xl" data-i18n="hero_subtitle">
+                    Diseñador de Producto con más de 4 años de experiencia combinando pensamiento espacial, investigación UX, metodologías ágiles (Scrum) y nuevas tecnologías (AR/VR, IA y gamificación) para crear soluciones centradas en el usuario con claridad y eficiencia.
+                </p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                    <button onclick="navigateToSection('projects-section')" class="px-6 py-3 rounded-full bg-brandBlue hover:bg-brandBlueDark text-white font-medium text-sm transition-all shadow-sm flex items-center gap-2">
+                        <span data-i18n="hero_cta_primary">Explorar casos de estudio</span>
+                        <span>↓</span>
+                    </button>
+                    <button onclick="openCVModal()" class="px-6 py-3 rounded-full bg-white hover:bg-zinc-100 text-ink border border-zinc-300 font-medium text-sm transition-all">
+                        <span data-i18n="hero_cta_secondary">Ver resumen de CV</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- PROJECTS GRID 2x2 -->
+            <section id="projects-section" class="space-y-8 framer-stack p-2 rounded-2xl" data-stack="Stack Vertical | Grid 2x2 | Gap 32px">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-zinc-300 pb-4">
+                    <div>
+                        <p class="font-mono text-xs uppercase tracking-widest text-zinc-500" data-i18n="projects_kicker">Casos de Estudio Seleccionados</p>
+                        <h2 class="font-serif text-4xl sm:text-5xl text-ink mt-1" data-i18n="projects_heading">Proyectos Destacados</h2>
+                    </div>
+                    <p class="font-mono text-xs text-zinc-600" data-i18n="projects_hint">Haz clic en cualquier tarjeta para leer el caso de estudio completo →</p>
+                </div>
+
+                <!-- Dynamic 2x2 Grid populated by JS -->
+                <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
+            </section>
+
+            <!-- ABOUT ME + TRAJECTORY SECTION -->
+            <section id="about-section" class="bg-white rounded-3xl p-6 sm:p-12 border border-zinc-200/90 shadow-sm space-y-14 framer-stack" data-stack="Stack Vertical | Padding 48px | Gap 56px">
+                
+                <!-- 2-Column Bio -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center framer-stack" data-stack="Stack Horizontal | 2 Columnas (5/7)">
+                    
+                    <!-- Left Column: Visual Storytelling (Specialty Coffee Pour-Over & 3D Precision) -->
+                    <div class="lg:col-span-5">
+                        <div class="relative rounded-2xl overflow-hidden bg-zinc-900 text-white p-6 sm:p-8 aspect-[4/5] flex flex-col justify-between shadow-md">
+                            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+                                <span>FLORIDABLANCA / BUCARAMANGA, CO</span>
+                                <span class="px-2 py-0.5 rounded bg-zinc-800 text-amber-300">93°C · V60</span>
+                            </div>
+
+                            <!-- Custom Editorial SVG representing the Pour-over Coffee + Spatial Grid from Hiller's prototype -->
+                            <div class="my-auto py-4 flex flex-col items-center justify-center">
+                                <svg viewBox="0 0 260 220" class="w-full max-w-[230px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Spatial 3D Isometric Grid Base -->
+                                    <path d="M30 175 L130 140 L230 175 L130 210 Z" stroke="#3F3F46" stroke-width="1.5" fill="#27272A" fill-opacity="0.5"/>
+                                    <path d="M65 162 L130 185 L195 162" stroke="#52525B" stroke-width="1" stroke-dasharray="3 3"/>
+                                    <!-- Gooseneck Kettle spout pouring -->
+                                    <path d="M35 45 C65 45, 75 85, 115 62 L123 68 C85 98, 62 62, 35 62 Z" fill="#E4E4E7"/>
+                                    <!-- Water stream -->
+                                    <path d="M121 67 C128 85, 130 105, 130 122" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 4"/>
+                                    <!-- V60 Dripper Cone -->
+                                    <path d="M95 115 L165 115 L145 158 L115 158 Z" fill="#C84B28" fill-opacity="0.9" stroke="#F4F4F5" stroke-width="2"/>
+                                    <path d="M165 123 C180 123, 180 145, 152 145" stroke="#F4F4F5" stroke-width="2.5" stroke-linecap="round"/>
+                                    <!-- Glass Server -->
+                                    <path d="M105 158 L155 158 L162 192 C162 197, 98 197, 98 192 Z" fill="#38BDF8" fill-opacity="0.15" stroke="#E4E4E7" stroke-width="2"/>
+                                    <path d="M101 178 L159 178 L161 192 L99 192 Z" fill="#78350F"/>
+                                </svg>
+                                <p class="font-mono text-[11px] text-zinc-400 text-center mt-3" data-i18n="about_photo_caption">
+                                    Precisión en los procesos: del café de filtrado lento y la impresión 3D al diseño de sistemas digitales.
+                                </p>
+                            </div>
+
+                            <div class="border-t border-zinc-800 pt-4 flex items-center justify-between text-xs font-mono text-zinc-300">
+                                <span data-i18n="about_stat_exp">+4 años como Product Designer</span>
+                                <span class="text-emerald-400">● Remote Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Authentic Narrative + Skills -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="space-y-2">
+                            <p class="font-mono text-xs uppercase tracking-widest text-accentTerra" data-i18n="about_kicker">Sobre mí · About me</p>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ink leading-tight" data-i18n="about_heading">
+                                De la innovación tangible a las experiencias digitales.
+                            </h2>
+                        </div>
+
+                        <div class="space-y-4 text-zinc-700 leading-relaxed text-base">
+                            <p data-i18n="about_p1">
+                                Como diseñador industrial y emprendedor que innova mediante la resolución autónoma de problemas en impresión 3D, aplico estas fortalezas fundamentales al diseño de Producto y UX/UI. Con más de 4 años de experiencia, mi mayor ventaja competitiva es combinar el pensamiento estratégico y espacial con una profunda empatía por el usuario final.
+                            </p>
+                            <p data-i18n="about_p2">
+                                Integro metodologías ágiles, en particular los principios de Scrum, junto con herramientas de Inteligencia Artificial y sistemas de diseño en Figma, para garantizar que cada solución centrada en el usuario se entregue con claridad, eficiencia y adaptabilidad. Ya sea diseñando economías gamificadas, interfaces en Realidad Aumentada o flujos digitales para el sector salud, disfruto transformar retos técnicos complejos en productos intuitivos.
+                            </p>
+                        </div>
+
+                        <!-- Skill Pills -->
+                        <div class="space-y-4 pt-2">
+                            <div>
+                                <p class="font-mono text-xs text-zinc-500 mb-2" data-i18n="skills_group_1">UX/UI & ESTRATEGIA DE PRODUCTO</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">UX Research</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium" data-i18n="skill_ia">Arquitectura de Información</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">Wireframing & Prototipado</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">Design Systems (Auto Layout)</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">Gamificación (Octalysis)</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">Accesibilidad WCAG</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cardBlue text-brandBlueDark font-medium">Agile / Scrum</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="font-mono text-xs text-zinc-500 mb-2" data-i18n="skills_group_2">HERRAMIENTAS, IA & TECNOLOGÍA</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">Figma</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">Prompt Engineering (IBM)</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">AR/VR (Unity & Vuforia)</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">HTML/CSS + IA</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">Blender & Fusion 360</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 border border-zinc-300 text-zinc-800">Impresión 3D Biomédica</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Career Milestones Table -->
+                <div id="experience-section" class="border-t border-zinc-200 pt-10 space-y-6 framer-stack" data-stack="Stack Vertical | Hitos Laborales">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <h3 class="font-serif text-3xl text-ink" data-i18n="exp_heading">Trayectoria Profesional y Académica</h3>
+                        <span class="font-mono text-xs text-zinc-500" data-i18n="exp_edu">UIS (Diseño Industrial) · University of Missouri-Kansas City (AR/VR)</span>
+                    </div>
+
+                    <div class="divide-y divide-zinc-200 border-t border-b border-zinc-200">
+                        <!-- Row 1 -->
+                        <div class="py-4 grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
+                            <div class="md:col-span-3 font-semibold text-ink" data-i18n="exp_1_role">Diseñador UX/UI</div>
+                            <div class="md:col-span-3 font-mono text-xs text-brandBlue font-medium">Concert Plaza</div>
+                            <div class="md:col-span-4 text-sm text-zinc-600" data-i18n="exp_1_desc">Flujos de usuario y gamificación del programa de afiliados Creators.</div>
+                            <div class="md:col-span-2 md:text-right font-mono text-xs text-zinc-500">2026</div>
+                        </div>
+                        <!-- Row 2 -->
+                        <div class="py-4 grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
+                            <div class="md:col-span-3 font-semibold text-ink" data-i18n="exp_2_role">Diseñador 3D & Flujos Digitales</div>
+                            <div class="md:col-span-3 font-mono text-xs text-brandBlue font-medium">Cerprótesis SAS</div>
+                            <div class="md:col-span-4 text-sm text-zinc-600" data-i18n="exp_2_desc">Transición digital de prótesis médicas mediante escaneo y modelado 3D.</div>
+                            <div class="md:col-span-2 md:text-right font-mono text-xs text-zinc-500">2024 – 2025</div>
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="py-4 grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
+                            <div class="md:col-span-3 font-semibold text-ink" data-i18n="exp_3_role">Profesor de Modelado CAD</div>
+                            <div class="md:col-span-3 font-mono text-xs text-brandBlue font-medium">Universidad Industrial de Santander</div>
+                            <div class="md:col-span-4 text-sm text-zinc-600" data-i18n="exp_3_desc">Mentoría en geometría espacial y manufactura para Ingeniería Biomédica.</div>
+                            <div class="md:col-span-2 md:text-right font-mono text-xs text-zinc-500">2025</div>
+                        </div>
+                        <!-- Row 4 -->
+                        <div class="py-4 grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
+                            <div class="md:col-span-3 font-semibold text-ink" data-i18n="exp_4_role">Fundador & Product Designer</div>
+                            <div class="md:col-span-3 font-mono text-xs text-brandBlue font-medium">Prinler</div>
+                            <div class="md:col-span-4 text-sm text-zinc-600" data-i18n="exp_4_desc">Estrategia, prototipado ágil y desarrollo de productos en impresión 3D.</div>
+                            <div class="md:col-span-2 md:text-right font-mono text-xs text-zinc-500" data-i18n="exp_4_date">2021 – Presente</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CASE STUDY DETAIL VIEW (Hidden by default, shown when clicking a card) -->
+        <div id="case-study-view" class="hidden max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
+            <div id="case-study-content"></div>
+        </div>
+    </main>
+
+    <!-- FOOTER / LET'S TALK -->
+    <footer class="bg-zinc-200/80 border-t border-zinc-300 mt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-8 py-16 text-center space-y-6 framer-stack" data-stack="Stack Vertical | Footer Centrado">
+            <p class="font-mono text-xs uppercase tracking-widest text-zinc-600" data-i18n="footer_kicker">Let's talk · Hablemos</p>
+            <h2 class="font-serif text-4xl sm:text-6xl text-ink max-w-2xl mx-auto leading-tight" data-i18n="footer_title">
+                ¿Listo para transformar ideas complejas en productos claros?
+            </h2>
+            <p class="font-mono text-xs sm:text-sm text-zinc-700 max-w-xl mx-auto" data-i18n="footer_subtitle">
+                Disponible para roles de Product Designer y UX/UI en equipos remotos o híbridos.
+            </p>
+
+            <div class="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <button onclick="copyEmail()" class="px-5 py-2.5 rounded-full bg-white border border-zinc-400 hover:border-ink text-xs sm:text-sm font-mono transition-all shadow-sm">
+                    hillerlo18@gmail.com (Copiar)
+                </button>
+                <a href="https://www.linkedin.com/in/hiller-lozano-designer" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-white border border-zinc-400 hover:border-ink text-xs sm:text-sm font-mono transition-all shadow-sm">
+                    LinkedIn ↗
+                </a>
+                <button onclick="openCVModal()" class="px-6 py-2.5 rounded-full bg-brandBlue hover:bg-brandBlueDark text-white text-xs sm:text-sm font-mono transition-all shadow-sm">
+                    Download CV (PDF)
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification for Clipboard -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-zinc-900 text-white px-4 py-3 rounded-xl shadow-lg font-mono text-xs flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="toast-text">Correo copiado al portapapeles: hillerlo18@gmail.com</span>
+    </div>
+
+    <!-- CV Quick Preview Modal -->
+    <div id="cv-modal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-zinc-200 max-h-[90vh] overflow-y-auto space-y-6">
+            <div class="flex items-start justify-between border-b border-zinc-200 pb-4">
+                <div>
+                    <h3 class="font-serif text-3xl text-ink">Hiller Lozano — Curriculum Vitae</h3>
+                    <p class="font-mono text-xs text-zinc-500">Product Designer | UX/UI · +57 3005685139 · hillerlo18@gmail.com</p>
+                </div>
+                <button onclick="closeCVModal()" class="px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-xs font-mono">✕</button>
+            </div>
+            <div class="space-y-4 text-sm text-zinc-700">
+                <p class="font-medium text-ink" data-i18n="cv_modal_summary">
+                    En Framer, este botón "Download CV" se vincula directamente a tu archivo "_CV Hiller Lozano.pdf" subido en la pestaña Assets.
+                </p>
+                <div class="p-4 rounded-2xl bg-cardBlue/60 border border-brandBlue/20 space-y-2">
+                    <p class="font-mono text-xs font-semibold text-brandBlueDark">EDUCACIÓN Y CERTIFICACIONES DESTACADAS</p>
+                    <ul class="space-y-1 text-xs font-mono text-zinc-800">
+                        <li>• 2026 | Google UX Design & Figma/Miro for UX — Coursera</li>
+                        <li>• 2025 | Generative AI: Prompt Engineering (IBM) & McKinsey Forward</li>
+                        <li>• 2022 | Diseño Industrial — Universidad Industrial de Santander (UIS)</li>
+                        <li>• 2020 | AR & VR Developer — University of Missouri-Kansas City (Beca)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeCVModal()" class="px-5 py-2 rounded-full bg-zinc-900 text-white text-xs font-mono">Cerrar vista previa</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'es';
+        let currentProjectId = null;
+        let xrayActive = false;
+
+        const uiTranslations = {
+            es: {
+                nav_projects: "Proyectos",
+                nav_about: "Sobre mí",
+                nav_Trajectory: "Trayectoria",
+                nav_cv: "CV",
+                hero_badge: "Diseñador de Producto | UX/UI",
+                hero_title_1: "Del boceto al",
+                hero_title_highlight: "prototipo funcional:",
+                hero_title_2: "diseño estratégico para resolver problemas reales.",
+                hero_subtitle: "Diseñador de Producto con más de 4 años de experiencia combinando pensamiento espacial, investigación UX, metodologías ágiles (Scrum) y nuevas tecnologías (AR/VR, IA y gamificación) para crear soluciones centradas en el usuario con claridad y eficiencia.",
+                hero_cta_primary: "Explorar casos de estudio",
+                hero_cta_secondary: "Ver resumen de CV",
+                projects_kicker: "Casos de Estudio Seleccionados",
+                projects_heading: "Proyectos Destacados",
+                projects_hint: "Haz clic en cualquier tarjeta para abrir el caso de estudio completo →",
+                about_photo_caption: "Precisión en los procesos: del café de filtrado lento y la impresión 3D al diseño de sistemas digitales.",
+                about_stat_exp: "+4 años como Product Designer",
+                about_kicker: "Sobre mí · Perfil Híbrido",
+                about_heading: "De la innovación tangible a las experiencias digitales.",
+                about_p1: "Como diseñador industrial y emprendedor que innova mediante la resolución autónoma de problemas en impresión 3D, aplico estas fortalezas fundamentales al diseño de Producto y UX/UI. Con más de 4 años de experiencia, mi mayor ventaja competitiva es combinar el pensamiento estratégico y espacial con una profunda empatía por el usuario final.",
+                about_p2: "Integro metodologías ágiles, en particular los principios de Scrum, junto con herramientas de Inteligencia Artificial y sistemas de diseño en Figma, para garantizar que cada solución centrada en el usuario se entregue con claridad, eficiencia y adaptabilidad. Ya sea diseñando economías gamificadas, interfaces en Realidad Aumentada o flujos digitales para el sector salud, disfruto transformar retos técnicos complejos en productos intuitivos.",
+                skills_group_1: "UX/UI & ESTRATEGIA DE PRODUCTO",
+                skill_ia: "Arquitectura de Información",
+                skills_group_2: "HERRAMIENTAS, IA & TECNOLOGÍA",
+                exp_heading: "Trayectoria Profesional y Académica",
+                exp_edu: "UIS (Diseño Industrial) · University of Missouri-Kansas City (AR/VR)",
+                exp_1_role: "Diseñador UX/UI",
+                exp_1_desc: "Flujos de usuario y gamificación del programa de afiliados Creators.",
+                exp_2_role: "Diseñador 3D & Flujos Digitales",
+                exp_2_desc: "Transición digital de prótesis médicas mediante escaneo y modelado 3D.",
+                exp_3_role: "Profesor de Modelado CAD",
+                exp_3_desc: "Mentoría en geometría espacial y manufactura para Ingeniería Biomédica.",
+                exp_4_role: "Fundador & Product Designer",
+                exp_4_desc: "Estrategia, prototipado ágil y desarrollo de productos en impresión 3D.",
+                exp_4_date: "2021 – Presente",
+                footer_kicker: "Hablemos · Let's talk",
+                footer_title: "¿Listo para transformar ideas complejas en productos claros?",
+                footer_subtitle: "Disponible para roles de Product Designer y UX/UI en equipos remotos o híbridos.",
+                cv_modal_summary: "En Framer, este botón 'Download CV' se vincula directamente a tu archivo PDF subido en la pestaña Assets.",
+                btn_view_more: "ver caso →",
+                btn_back: "← Volver al portafolio principal"
+            },
+            en: {
+                nav_projects: "Projects",
+                nav_about: "About me",
+                nav_Trajectory: "Experience",
+                nav_cv: "Resume",
+                hero_badge: "Product Designer | UX/UI",
+                hero_title_1: "From sketch to",
+                hero_title_highlight: "functional prototype:",
+                hero_title_2: "strategic design for real-world problems.",
+                hero_subtitle: "Product Designer with 4+ years of experience combining spatial thinking, UX research, Agile methodologies (Scrum), and emerging tech (AR/VR, AI, and gamification) to deliver user-centered solutions with clarity and efficiency.",
+                hero_cta_primary: "Explore Case Studies",
+                hero_cta_secondary: "Quick CV Summary",
+                projects_kicker: "Selected Case Studies",
+                projects_heading: "Featured Work",
+                projects_hint: "Click on any card to read the full case study with captions →",
+                about_photo_caption: "Process precision: from slow-pour specialty coffee and 3D printing to scalable digital design systems.",
+                about_stat_exp: "4+ years as a Product Designer",
+                about_kicker: "About me · Hybrid Profile",
+                about_heading: "From tangible innovation to digital experiences.",
+                about_p1: "As an industrial designer and entrepreneur who innovates through autonomous problem-solving in 3D printing, I apply these core strengths directly to Product and UX/UI design. With over 4 years of experience, my greatest advantage lies in combining strategic and spatial thinking with deep user empathy.",
+                about_p2: "I integrate Agile methodologies—particularly Scrum principles—alongside AI workflows and scalable Figma design systems to ensure user-centered solutions are delivered with clarity, efficiency, and adaptability. Whether crafting gamified economies, Augmented Reality interfaces, or digital healthcare workflows, I thrive on turning complex technical constraints into intuitive products.",
+                skills_group_1: "UX/UI & PRODUCT STRATEGY",
+                skill_ia: "Information Architecture",
+                skills_group_2: "TOOLS, AI & TECHNOLOGY",
+                exp_heading: "Career & Academic Milestones",
+                exp_edu: "UIS (Industrial Design) · University of Missouri-Kansas City (AR/VR)",
+                exp_1_role: "UX/UI Designer",
+                exp_1_desc: "User flows and Octalysis gamification for the Creators affiliate program.",
+                exp_2_role: "3D & Digital Workflow Designer",
+                exp_2_desc: "Digital transition of medical prosthetics via 3D scanning and organic modeling.",
+                exp_3_role: "CAD Modeling Lecturer",
+                exp_3_desc: "Mentoring Biomedical Engineering students in spatial geometry and manufacturing.",
+                exp_4_role: "Founder & Product Designer",
+                exp_4_desc: "Product strategy, Agile prototyping, and 3D-printed product development.",
+                exp_4_date: "2021 – Present",
+                footer_kicker: "Let's talk · Hablemos",
+                footer_title: "Ready to turn complex ideas into clear digital products?",
+                footer_subtitle: "Available for Product Designer and UX/UI roles in remote or hybrid teams.",
+                cv_modal_summary: "In Framer, this 'Download CV' button links directly to your PDF uploaded in the Assets tab.",
+                btn_view_more: "view more →",
+                btn_back: "← Back to main portfolio"
+            }
+        };
+
+        const projectsData = [
+            {
+                id: 'concert-plaza',
+                year: '2026',
+                tagsLine: 'Gamificación · Octalysis · Figma',
+                title: {
+                    es: 'Concert Plaza',
+                    en: 'Concert Plaza'
+                },
+                fullTitle: {
+                    es: 'Concert Plaza — Gamificación de Programa de Afiliados (Creators)',
+                    en: 'Concert Plaza — Gamified Affiliate Ecosystem (Creators)'
+                },
+                cardSummary: {
+                    es: 'Diseño de un ecosistema de afiliados con economía dual (ConcertCoins y Plaxs) que transforma promotores transaccionales en fans y embajadores de eventos.',
+                    en: 'Dual-economy affiliate ecosystem (ConcertCoins & Plaxs) designed to turn transactional promoters into loyal event ambassadors.'
+                },
+                role: {
+                    es: 'Diseñador UX/UI (Co-diseño junto a Lead Designer y Especialista en Gamificación)',
+                    en: 'UX/UI Designer (Co-designed with Lead Designer & Gamification Specialist)'
+                },
+                skills: ['Figma', 'Gamificación', 'Octalysis', 'UX Research', 'MVP Lovable'],
+                challenge: {
+                    es: 'Los programas de afiliados tradicionales en tiqueteras digitales sufren de alta deserción cuando la motivación es puramente transaccional. El objetivo fue crear un sistema basado en gamificación que incentivara la promoción de eventos mediante una economía dual, fomentando la lealtad a largo plazo hacia los conciertos.',
+                    en: 'Traditional ticketing affiliate programs suffer from high churn when motivation is purely transactional. Our goal was to design a gamified dual-economy system that fosters genuine fan affinity and long-term retention.'
+                },
+                process: {
+                    es: 'Aplicamos el framework Octalysis separando las necesidades del Promotor (configuración rápida sin fricción) de los motores intrínsecos del Creator: Significado Épico (ser embajador fanático), Influencia Social, Desarrollo (niveles de reputación) y Posesión mediante dos monedas virtuales.',
+                    en: 'Using the Octalysis framework, we separated Promoter needs (frictionless setup) from Creator intrinsic drivers: Epic Meaning (being an event ambassador), Social Influence, Accomplishment (reputation tiers), and Ownership via a dual virtual currency.'
+                },
+                decisions: {
+                    es: 'Simplificamos el formulario del promotor a solo 3 decisiones clave (activar programa, definir meta y elegir beneficios), delegando la complejidad al sistema. En paralelo, iteramos el copywriting y la jerarquía visual para explicar la diferencia entre ConcertCoins (moneda dura por ventas) y Plaxs (moneda suave por engagement) sin confundir al usuario.',
+                    en: 'We simplified the promoter setup flow into just 3 core decisions (activate program, set goal, select perks). Simultaneously, we iterated on information architecture and UX writing so Creators immediately understood the difference between ConcertCoins (hard sales currency) and Plaxs (soft engagement currency).'
+                },
+                outcome: {
+                    es: 'Consolidamos un MVP enfocado en lo "Lovable" con flujos validados e integramos herramientas de IA para resolver casos borde en las reglas de canje de recompensas.',
+                    en: 'Delivered a Minimum Lovable Product (MLP) with clear dashboards for both user personas, leveraging AI workflows to stress-test edge cases in reward redemption mechanics.'
+                },
+                gallery: [
+                    {
+                        badge: 'UI HI-FI · DUAL DASHBOARD',
+                        metric: 'ConcertCoins + Plaxs',
+                        caption: {
+                            es: 'Vista general del ecosistema Creators: a la izquierda, el panel de configuración rápida para promotores; a la derecha, el perfil gamificado del afiliado.',
+                            en: 'Overview of the Creators ecosystem: frictionless setup dashboard for event promoters on the left, and the gamified affiliate profile on the right.'
+                        }
+                    },
+                    {
+                        badge: 'OCTALYSIS · ARQUITECTURA DE INCENTIVOS',
+                        metric: '4 Motores Core',
+                        caption: {
+                            es: 'Arquitectura de incentivos basada en Octalysis, separando la economía dura (ConcertCoins por ventas) de la moneda suave (Plaxs por interacción y comunidad).',
+                            en: 'Incentive architecture based on the Octalysis framework, separating hard currency (ConcertCoins from ticket sales) from soft currency (Plaxs from community engagement).'
+                        }
+                    },
+                    {
+                        badge: 'WIREFRAMES LO-FI · REDUCCIÓN DE FRICCIÓN',
+                        metric: '3 Pasos Clave',
+                        caption: {
+                            es: 'Exploración lo-fi donde redujimos la complejidad técnica del formulario del promotor a solo 3 decisiones clave (activar programa, definir meta y elegir beneficios).',
+                            en: 'Lo-fi wireframe exploration reducing complex rule configuration into 3 core decisions for the promoter (activate program, set goal, and select rewards).'
+                        }
+                    },
+                    {
+                        badge: 'CATÁLOGO Y REPUTACIÓN · DISEÑO FINAL',
+                        metric: 'MVP Lovable',
+                        caption: {
+                            es: 'Interfaz final del Creator diseñada para visualizar el nivel de reputación, el saldo de monedas virtuales sin fricción cognitiva y el catálogo inmersivo de recompensas.',
+                            en: 'Final high-fidelity Creator UI designed to track reputation levels, dual-currency balances without cognitive friction, and the immersive rewards catalog.'
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'serp-ar',
+                year: '2022',
+                tagsLine: 'UX Research · AR/VR · Salud',
+                title: {
+                    es: 'S.E.R.P. AR',
+                    en: 'S.E.R.P. AR'
+                },
+                fullTitle: {
+                    es: 'S.E.R.P. — Simulador de Examen Rectal de Próstata en Realidad Aumentada',
+                    en: 'S.E.R.P. — Augmented Reality Prostate Exam Medical Simulator'
+                },
+                cardSummary: {
+                    es: 'Interfaz en Realidad Aumentada para entrenamiento clínico en la UIS que redujo la carga cognitiva y aumentó el acierto diagnóstico estudiantil en un +17.5%.',
+                    en: 'Augmented Reality interface for clinical training at UIS that balanced cognitive load and boosted medical students\' diagnostic accuracy by +17.5%.'
+                },
+                role: {
+                    es: 'Diseñador UX/UI e Investigador Líder (Becario en VR/AR en University of Missouri-Kansas City)',
+                    en: 'Lead UX/UI Designer & Researcher (VR/AR Scholar at University of Missouri-Kansas City)'
+                },
+                skills: ['Figma', 'Unity AR', 'Análisis Cognitivo (CTT)', 'UX Research', 'Escala SUS'],
+                challenge: {
+                    es: 'Los estudiantes de medicina (6.º a 9.º semestre) de la UIS sentían gran inseguridad al practicar en simuladores físicos tradicionales porque el examen es un procedimiento "a ciegas" sin visualización anatómica ni feedback en tiempo real.',
+                    en: 'Medical students (6th–9th semester) at UIS experienced high insecurity with traditional physical models because prostate palpation is performed "blindly" without visual feedback.'
+                },
+                process: {
+                    es: 'Tras mi estancia en Kansas City con EON Reality, aplicamos Análisis Cognitivo de Tareas (CTT) junto a urólogos expertos, diseñando diagramas de tareas concurrentes y validando el aprendizaje mediante pruebas SUS, VisAWI y transferencia clínica.',
+                    en: 'Following my VR/AR training in Kansas City with EON Reality, we applied Cognitive Task Analysis (CTT) with urologists, mapping Concurrent Task Trees and validating usability via SUS and clinical transfer tests.'
+                },
+                decisions: {
+                    es: 'Como el estudiante usa una mano para palpar (rastreada con el sensor Leap Motion), iteramos el hardware pasando de 3 a 5 botones físicos dedicados para eliminar errores. Diseñamos una pantalla dividida (vista superior y lateral) que entrega información justo a tiempo sin saturar la atención táctil.',
+                    en: 'Because one hand is occupied palpating (tracked millimeter-by-millimeter via Leap Motion), we iterated the hardware from 3 to 5 physical buttons. The split-screen UI delivers just-in-time visual feedback without overloading tactile focus.'
+                },
+                outcome: {
+                    es: 'Los estudiantes que usaron la interfaz de Realidad Aumentada alcanzaron un 78.3% de acierto diagnóstico, superando en un +17.5% a quienes entrenaron con el simulador físico tradicional.',
+                    en: 'Students trained with the Augmented Reality interface achieved a 78.3% diagnostic accuracy rate, outperforming the traditional simulator group by +17.5%.'
+                },
+                gallery: [
+                    {
+                        badge: 'UNITY + VUFORIA · PANTALLA DIVIDIDA',
+                        metric: '78.3% Acierto',
+                        caption: {
+                            es: 'Interfaz minimalista en pantalla dividida (vista anatómica superior y lateral) integrada en Unity, utilizando tonos azules clínicos y acentos rosa asociados a la lucha contra el cáncer.',
+                            en: 'Minimalist split-screen interface (top and side anatomical views) built in Unity, using clinical blue tones and pink accents representing cancer awareness.'
+                        }
+                    },
+                    {
+                        badge: 'CARGA COGNITIVA · DIAGRAMA CTT',
+                        metric: 'Just-in-Time UI',
+                        caption: {
+                            es: 'Diagrama de Tareas Concurrentes (CTT) y flujo de navegación diseñado para entregar información "justo a tiempo" sin distraer al estudiante de la palpación táctil.',
+                            en: 'Concurrent Task Tree (CTT) diagram and navigation flow designed to deliver "just-in-time" visual feedback without distracting students from tactile palpation.'
+                        }
+                    },
+                    {
+                        badge: 'ITERACIÓN HARDWARE + UI · 3 VS 5 BOTONES',
+                        metric: '-Errores de Uso',
+                        caption: {
+                            es: 'Evolución de los esquemas de baja fidelidad en blanco y negro: el testeo con usuarios permitió pasar de 3 a 5 botones físicos, reduciendo errores de navegación con la mano libre.',
+                            en: 'Evolution of black-and-white lo-fi wireframes: user testing validated transitioning from 3 to 5 physical buttons, minimizing navigation errors during single-handed operation.'
+                        }
+                    },
+                    {
+                        badge: 'LABORATORIO CLÍNICO UIS · LEAP MOTION',
+                        metric: '+17.5% Mejora',
+                        caption: {
+                            es: 'Validación experimental con estudiantes de medicina de la UIS sincronizando el movimiento de la mano en tiempo real mediante Leap Motion y Vuforia, logrando un +17.5% de acierto diagnóstico.',
+                            en: 'Experimental validation with UIS medical students synchronizing real-time hand tracking via Leap Motion and Vuforia, achieving a +17.5% increase in diagnostic accuracy.'
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'atom-to-pixel',
+                year: '2025',
+                tagsLine: 'Product Design · IA · Salud 3D',
+                title: {
+                    es: 'Del Átomo al Píxel',
+                    en: 'Atom to Pixel'
+                },
+                fullTitle: {
+                    es: 'Del Átomo al Píxel — Diseño de Producto, Hardware para IA & Flujos 3D',
+                    en: 'From Atom to Pixel — Product Design, AI Hardware & 3D Workflows'
+                },
+                cardSummary: {
+                    es: 'Casos selectos donde la ergonomía física se une a lo digital: optimización de flujos 3D biomédicos (Cerprótesis), protección óptica para una app de IA (Kit Avatar) y Prinler.',
+                    en: 'Selected works bridging physical ergonomics and digital workflows: 3D biomedical optimization (Cerprótesis), optical hardware for an AI app (Kit Avatar), and Prinler.'
+                },
+                role: {
+                    es: 'Product Designer, Especialista 3D & Fundador',
+                    en: 'Product Designer, 3D Workflow Specialist & Founder'
+                },
+                skills: ['Product Design', 'Agile / Scrum', 'Blender', 'Fusion 360', 'Escaneo 3D Biomédico'],
+                challenge: {
+                    es: 'Conectar las restricciones del mundo físico (anatomía de pacientes, interferencia solar en sensores de IA a 4 metros de altura y manufactura sostenible) con flujos digitales eficientes y centrados en el ser humano.',
+                    en: 'Connecting physical world constraints (patient anatomy, solar glare on AI sensors mounted 4 meters high, and sustainable manufacturing) with efficient digital workflows.'
+                },
+                process: {
+                    es: 'Apliqué ciclos cortos de iteración bajo principios Scrum: empatía con el paciente/usuario, escaneo y modelado paramétrico/orgánico en Fusion 360 y Blender, y pruebas funcionales con polímeros técnicos.',
+                    en: 'Applied short Agile/Scrum iteration cycles: user empathy, anatomical scanning, parametric/organic modeling in Fusion 360 and Blender, and mechanical testing.'
+                },
+                decisions: {
+                    es: 'En Cerprótesis digitalizamos el flujo artesanal hacia escaneo 3D para priorizar el confort anatómico. En Kit Avatar diseñamos un disipador de luz impreso en 3D que mejoró la captura de datos para la app de IA. En Vafi/Prinler creamos organizadores modulares basados en patrones de relajación.',
+                    en: 'At Cerprótesis, we digitized prosthetic fabrication via 3D scanning for anatomical comfort. In Kit Avatar, we engineered a light diffuser that boosted optical data accuracy for an AI app. At Vafi/Prinler, we built modular organizers.'
+                },
+                outcome: {
+                    es: 'Reducción medible en los tiempos de producción de prótesis médicas, mejora en la lectura de datos de IA en exteriores y más de 4 años liderando soluciones de producto de extremo a extremo.',
+                    en: 'Reduced production times for medical prosthetics, improved outdoor AI vision data capture, and 4+ years delivering autonomous end-to-end product solutions.'
+                },
+                gallery: [
+                    {
+                        badge: 'CERPRÓTESIS SAS · SALUD DIGITAL 3D',
+                        metric: '-Tiempo Producción',
+                        caption: {
+                            es: 'Flujo de trabajo digital combinando escaneo anatómico y modelado 3D orgánico para optimizar el ajuste ergonómico y reducir los tiempos de entrega de prótesis médicas.',
+                            en: 'Digital workflow combining anatomical scanning and organic 3D modeling to optimize ergonomic fit and reduce production lead times for medical prosthetics.'
+                        }
+                    },
+                    {
+                        badge: 'KIT AVATAR · HARDWARE PARA APP DE IA',
+                        metric: '4m Altura · Óptica',
+                        caption: {
+                            es: 'Sistema impreso en 3D compuesto por soporte de anclaje, carcasa protectora y disipador de luz diseñado para eliminar reflejos solares en sensores de visión por IA a 4 metros de altura.',
+                            en: 'Exploded view of the 3D-printed mounting bracket, protective enclosure, and custom light diffuser designed to block solar glare on AI vision sensors mounted 4 meters high.'
+                        }
+                    },
+                    {
+                        badge: 'PRINLER & VAFI · PRODUCTO ÁGIL',
+                        metric: 'Biopolímeros FDM',
+                        caption: {
+                            es: 'Prototipos funcionales fabricados con biopolímeros bajo iteraciones ágiles (Scrum), equilibrando geometría espacial, resistencia mecánica y experiencia de uso cotidiana.',
+                            en: 'Functional prototypes manufactured with biopolymers using Agile (Scrum) iterations, balancing spatial geometry, mechanical durability, and everyday usability.'
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'this-website',
+                year: '2026',
+                tagsLine: 'Figma · Código IA · WCAG',
+                title: {
+                    es: 'Este Sitio Web',
+                    en: 'This Website'
+                },
+                fullTitle: {
+                    es: 'Mi Portafolio en una Página Web — Research, Accesibilidad WCAG & Flujo IA',
+                    en: 'My Web Portfolio — Recruiter UX Research, WCAG Accessibility & AI Workflow'
+                },
+                cardSummary: {
+                    es: 'Caso de estudio end-to-end: desde entrevistas con reclutadores reales hasta la construcción de un sistema de diseño accesible en Figma desplegado en la web.',
+                    en: 'End-to-end case study: from user interviews with tech recruiters to a WCAG-compliant design system built in Figma and deployed to the web.'
+                },
+                role: {
+                    es: 'Diseñador UX/UI & Frontend asistido por IA',
+                    en: 'UX/UI Designer & AI-Assisted Frontend Builder'
+                },
+                skills: ['Figma Auto Layout', 'Accesibilidad WCAG', 'Design System', 'AI Prompting', 'Framer / GitHub'],
+                challenge: {
+                    es: 'Diseñar y publicar un portafolio web propio que respondiera a lo que los reclutadores y líderes de diseño realmente evalúan en pocos segundos: claridad de rol, pensamiento crítico y autonomía.',
+                    en: 'Design and ship a personal web portfolio tailored to what tech recruiters and design leads evaluate in seconds: role clarity, critical thinking, and remote autonomy.'
+                },
+                process: {
+                    es: 'Entrevistamos a 5 reclutadores reales para construir el User Persona de Laura Méndez (Talent Acquisition Specialist). A partir de sus dolores, creamos el mapa de sitio (<4 niveles), paper wireframes y un sistema de diseño en Figma.',
+                    en: 'Interviewed 5 tech recruiters to build the Laura Méndez User Persona. Based on her pain points, we crafted a flat sitemap (<4 levels), paper wireframes, and a scalable Figma Design System.'
+                },
+                decisions: {
+                    es: 'Estructuramos cada proyecto con Auto Layout y constraints para garantizar una transición fluida entre Desktop y Mobile. Verificamos los contrastes tipográficos bajo estándares WCAG e integramos generación asistida por IA para lograr independencia técnica.',
+                    en: 'Built every section using Figma Auto Layout and constraints for responsive Desktop and Mobile views. Verified WCAG color contrast ratios and used AI-assisted code/Framer workflows for technical independence.'
+                },
+                outcome: {
+                    es: 'Un portafolio bilingüe (ES/EN), accesible y sin fricción que comunica más de 4 años de trayectoria en diseño de producto y UX/UI.',
+                    en: 'A bilingual (ES/EN), WCAG-accessible portfolio that clearly communicates 4+ years of Product and UX/UI design impact.'
+                },
+                gallery: [
+                    {
+                        badge: 'FIGJAM · EMPATÍA CON RECLUTADORES',
+                        metric: '5 Entrevistas IT',
+                        caption: {
+                            es: 'Síntesis de investigación y moodboards enfocados en las necesidades de reclutadores y líderes de diseño para evaluar procesos de trabajo en pocos segundos.',
+                            en: 'Research synthesis and moodboards focused on what recruiters and design leads prioritize when evaluating UX processes under tight time constraints.'
+                        }
+                    },
+                    {
+                        badge: 'SITEMAP & PAPER WIREFRAMES · LO-FI',
+                        metric: '< 4 Niveles',
+                        caption: {
+                            es: 'Transición desde el mapa de sitio (sitemap) y bocetos en papel hasta prototipos de baja fidelidad en Figma para validar la jerarquía de lectura antes del diseño visual.',
+                            en: 'Transition from sitemap and paper wireframes to lo-fi prototypes in Figma to validate reading hierarchy and navigation structure prior to visual styling.'
+                        }
+                    },
+                    {
+                        badge: 'DESIGN SYSTEM & ACCESIBILIDAD WCAG',
+                        metric: 'Contraste AA/AAA',
+                        caption: {
+                            es: 'Sistema de diseño escalable en Figma estructurado con Auto Layout, constraints, componentes reutilizables y contrastes cromáticos verificados bajo estándares WCAG.',
+                            en: 'Scalable Figma Design System built with Auto Layout, constraints, reusable components, and color contrast ratios strictly verified against WCAG accessibility guidelines.'
+                        }
+                    },
+                    {
+                        badge: 'RESPONSIVE · DESPLIEGUE WEB',
+                        metric: 'Desktop + Mobile',
+                        caption: {
+                            es: 'Adaptación fluida entre Desktop Layout y Mobile Layout, integrando generación de código HTML/CSS asistida por IA y despliegue en producción a través de GitHub/Framer.',
+                            en: 'Seamless adaptation between Desktop and Mobile layouts, integrating AI-assisted HTML/CSS code generation and web deployment via GitHub/Framer.'
+                        }
+                    }
+                ]
+            }
+        ];
+
+        function getProjectIllustration(id) {
+            if (id === 'concert-plaza') {
+                return `
+                <svg viewBox="0 0 220 160" class="w-full h-full object-cover" fill="none">
+                    <rect width="220" height="160" fill="#18181B"/>
+                    <circle cx="65" cy="75" r="34" fill="#C84B28" fill-opacity="0.2" stroke="#C84B28" stroke-width="2"/>
+                    <circle cx="65" cy="75" r="18" fill="#F59E0B"/>
+                    <text x="65" y="79" text-anchor="middle" fill="#18181B" font-family="monospace" font-weight="bold" font-size="11">CC</text>
+                    <rect x="115" y="38" width="82" height="22" rx="6" fill="#27272A" stroke="#3F3F46"/>
+                    <rect x="122" y="46" width="45" height="6" rx="3" fill="#38BDF8"/>
+                    <rect x="115" y="68" width="82" height="22" rx="6" fill="#27272A" stroke="#3F3F46"/>
+                    <rect x="122" y="76" width="62" height="6" rx="3" fill="#A855F7"/>
+                    <rect x="115" y="98" width="82" height="24" rx="6" fill="#0F5482"/>
+                    <text x="156" y="114" text-anchor="middle" fill="#FFF" font-family="monospace" font-size="9">OCTALYSIS MVP</text>
+                </svg>`;
+            }
+            if (id === 'serp-ar') {
+                return `
+                <svg viewBox="0 0 220 160" class="w-full h-full object-cover" fill="none">
+                    <rect width="220" height="160" fill="#0A2540"/>
+                    <line x1="110" y1="15" x2="110" y2="145" stroke="#38BDF8" stroke-opacity="0.4" stroke-dasharray="4 4"/>
+                    <circle cx="60" cy="80" r="30" stroke="#38BDF8" stroke-width="2" fill="#0F5482" fill-opacity="0.4"/>
+                    <circle cx="60" cy="80" r="10" fill="#F43F5E"/>
+                    <rect x="130" y="45" width="68" height="70" rx="8" stroke="#38BDF8" stroke-width="1.5" fill="#0F5482" fill-opacity="0.25"/>
+                    <path d="M145 95 L160 65 L178 85" stroke="#F43F5E" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="110" y="148" text-anchor="middle" fill="#BAE6FD" font-family="monospace" font-size="9">+17.5% DIAGNOSTIC ACCURACY</text>
+                </svg>`;
+            }
+            if (id === 'atom-to-pixel') {
+                return `
+                <svg viewBox="0 0 220 160" class="w-full h-full object-cover" fill="none">
+                    <rect width="220" height="160" fill="#27272A"/>
+                    <polygon points="110,28 165,58 110,88 55,58" fill="#3F3F46" stroke="#E4E4E7" stroke-width="1.5"/>
+                    <polygon points="55,58 110,88 110,132 55,102" fill="#0F5482" stroke="#E4E4E7" stroke-width="1.5"/>
+                    <polygon points="165,58 110,88 110,132 165,102" fill="#C84B28" stroke="#E4E4E7" stroke-width="1.5"/>
+                    <text x="110" y="150" text-anchor="middle" fill="#D4D4D8" font-family="monospace" font-size="9">3D BIOMEDICAL & AI HARDWARE</text>
+                </svg>`;
+            }
+            return `
+            <svg viewBox="0 0 220 160" class="w-full h-full object-cover" fill="none">
+                <rect width="220" height="160" fill="#1E293B"/>
+                <rect x="24" y="24" width="110" height="85" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+                <rect x="34" y="36" width="55" height="10" rx="2" fill="#C84B28"/>
+                <rect x="34" y="54" width="88" height="22" rx="4" fill="#E1EFFA"/>
+                <rect x="148" y="42" width="48" height="90" rx="8" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/>
+                <rect x="156" y="56" width="32" height="18" rx="3" fill="#0F5482"/>
+                <text x="80" y="138" text-anchor="middle" fill="#BAE6FD" font-family="monospace" font-size="9">WCAG + AUTO LAYOUT</text>
+            </svg>`;
+        }
+
+        function renderProjectsGrid() {
+            const grid = document.getElementById('projects-grid');
+            const viewMoreText = uiTranslations[currentLang].btn_view_more;
+
+            grid.innerHTML = projectsData.map(project => `
+                <article onclick="openCaseStudy('${project.id}')" class="group cursor-pointer rounded-3xl bg-cardBlue hover:bg-cardBlueHover transition-all duration-200 border border-brandBlue/15 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between framer-stack" data-stack="Card Component | Auto Layout">
+                    <!-- Top Split Section matching Hiller's Figma Prototype -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 border-b border-brandBlue/25">
+                        <!-- Left Thumbnail -->
+                        <div class="sm:col-span-5 aspect-[16/10] sm:aspect-auto overflow-hidden bg-zinc-900">
+                            <div class="w-full h-full group-hover:scale-105 transition-transform duration-300">
+                                ${getProjectIllustration(project.id)}
+                            </div>
+                        </div>
+                        <!-- Right Header Info -->
+                        <div class="sm:col-span-7 p-5 sm:p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-1.5">
+                                <p class="font-mono text-xs text-zinc-700 tracking-tight">${project.tagsLine}</p>
+                                <h3 class="font-serif text-3xl sm:text-4xl text-ink leading-none">${project.title[currentLang]}</h3>
+                            </div>
+                            <div class="pt-3 border-t border-brandBlue/30 flex items-center justify-between">
+                                <span class="font-serif text-xl text-ink">${project.year}</span>
+                                <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-brandBlue group-hover:bg-brandBlueDark text-white font-serif text-base transition-colors">
+                                    ${viewMoreText}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bottom Summary matching Hiller's Figma Card -->
+                    <div class="p-5 sm:p-6 bg-cardBlue/60">
+                        <p class="font-mono text-xs sm:text-sm text-zinc-800 leading-relaxed">
+                            ${project.cardSummary[currentLang]}
+                        </p>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function openCaseStudy(projectId) {
+            currentProjectId = projectId;
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+
+            const labels = currentLang === 'es' ? {
+                role: 'Rol en el proyecto',
+                skills: 'Habilidades y Herramientas',
+                challenge: '1. El Reto y Contexto',
+                process: '2. Investigación y Metodología',
+                decisions: '3. Decisiones Clave de Diseño e Iteración',
+                outcome: '4. Impacto y Resultados',
+                galleryTitle: 'Evidencia Visual y Pies de Foto (Captions para tus imágenes en Figma)'
+            } : {
+                role: 'Role in the project',
+                skills: 'Skills & Tools',
+                challenge: '1. The Challenge & Context',
+                process: '2. Research & Methodology',
+                decisions: '3. Key Design Decisions & Iteration',
+                outcome: '4. Outcome & Measurable Impact',
+                galleryTitle: 'Visual Evidence & Image Captions'
+            };
+
+            const container = document.getElementById('case-study-content');
+            container.innerHTML = `
+                <div class="space-y-12 framer-stack p-2 rounded-2xl" data-stack="Case Study Page | Stack Vertical">
+                    <!-- Top Back Bar -->
+                    <div>
+                        <button onclick="showHome()" class="inline-flex items-center gap-2 font-serif text-2xl text-ink hover:text-accentTerra transition-colors">
+                            ${uiTranslations[currentLang].btn_back}
+                        </button>
+                    </div>
+
+                    <!-- Case Study Header -->
+                    <div class="space-y-4 border-b border-zinc-300 pb-8">
+                        <p class="font-mono text-xs sm:text-sm text-accentTerra uppercase tracking-wider">${project.tagsLine} · ${project.year}</p>
+                        <h1 class="font-serif text-4xl sm:text-6xl text-ink leading-[1.08]">${project.fullTitle[currentLang]}</h1>
+                        <p class="font-mono text-sm sm:text-base text-zinc-700 max-w-3xl leading-relaxed">${project.cardSummary[currentLang]}</p>
+
+                        <!-- Role & Skills Pills -->
+                        <div class="pt-4 grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-2xl border border-zinc-200">
+                            <div>
+                                <h2 class="font-serif text-xl text-ink mb-1">${labels.role}</h2>
+                                <p class="font-mono text-xs sm:text-sm text-zinc-700">${project.role[currentLang]}</p>
+                            </div>
+                            <div>
+                                <h2 class="font-serif text-xl text-ink mb-2">${labels.skills}</h2>
+                                <div class="flex flex-wrap gap-2">
+                                    ${project.skills.map(skill => `<span class="px-3 py-1 rounded-full bg-cardBlue text-brandBlueDark font-mono text-xs font-medium">${skill}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Scannable Narrative Blocks + Interleaved Visuals with Captions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 space-y-3">
+                            <h3 class="font-serif text-2xl sm:text-3xl text-ink">${labels.challenge}</h3>
+                            <p class="text-sm sm:text-base text-zinc-700 leading-relaxed">${project.challenge[currentLang]}</p>
+                        </div>
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 space-y-3">
+                            <h3 class="font-serif text-2xl sm:text-3xl text-ink">${labels.process}</h3>
+                            <p class="text-sm sm:text-base text-zinc-700 leading-relaxed">${project.process[currentLang]}</p>
+                        </div>
+                    </div>
+
+                    <!-- Visual Evidence Grid with the exact Bilingual Captions -->
+                    <div class="space-y-6">
+                        <h3 class="font-serif text-3xl text-ink">${labels.galleryTitle}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${project.gallery.map((item, idx) => `
+                                <figure class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-sm flex flex-col justify-between framer-stack" data-stack="Imagen + Caption Stack (Gap 10px)">
+                                    <div class="bg-zinc-900 p-6 aspect-[16/9] flex flex-col justify-between text-white">
+                                        <div class="flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                                            <span>FIG. 0${idx + 1} — ${item.badge}</span>
+                                            <span class="px-2.5 py-0.5 rounded-full bg-brandBlue text-white">${item.metric}</span>
+                                        </div>
+                                        <div class="my-auto py-4 text-center">
+                                            <p class="font-serif text-2xl sm:text-3xl text-zinc-100">${project.title[currentLang]} · Vista 0${idx + 1}</p>
+                                            <p class="font-mono text-xs text-zinc-400 mt-1">[Espacio para tu captura de Figma / Mockup]</p>
+                                        </div>
+                                        <div class="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                                            <div class="h-full bg-accentTerra w-2/3"></div>
+                                        </div>
+                                    </div>
+                                    <figcaption class="p-4 sm:p-5 bg-cardBlue/40 border-t border-zinc-200 font-mono text-xs text-zinc-800 leading-relaxed">
+                                        <strong class="text-brandBlueDark">Caption:</strong> ${item.caption[currentLang]}
+                                    </figcaption>
+                                </figure>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 space-y-3">
+                            <h3 class="font-serif text-2xl sm:text-3xl text-ink">${labels.decisions}</h3>
+                            <p class="text-sm sm:text-base text-zinc-700 leading-relaxed">${project.decisions[currentLang]}</p>
+                        </div>
+                        <div class="bg-cardBlue p-6 sm:p-8 rounded-2xl border border-brandBlue/20 space-y-3">
+                            <h3 class="font-serif text-2xl sm:text-3xl text-ink">${labels.outcome}</h3>
+                            <p class="text-sm sm:text-base text-zinc-800 leading-relaxed font-medium">${project.outcome[currentLang]}</p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation between Case Studies -->
+                    <div class="pt-6 border-t border-zinc-300 flex items-center justify-between">
+                        <button onclick="showHome()" class="px-6 py-3 rounded-full bg-zinc-900 hover:bg-zinc-700 text-white font-mono text-xs transition-colors">
+                            ${uiTranslations[currentLang].btn_back}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('case-study-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHome() {
+            currentProjectId = null;
+            document.getElementById('case-study-view').classList.add('hidden');
+            document.getElementById('home-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function navigateToSection(sectionId) {
+            showHome();
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 60);
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const btnEs = document.getElementById('btn-es');
+            const btnEn = document.getElementById('btn-en');
+
+            if (lang === 'es') {
+                btnEs.className = 'px-2.5 py-1.5 bg-zinc-900 text-white font-medium transition-colors';
+                btnEn.className = 'px-2.5 py-1.5 bg-transparent text-zinc-800 hover:bg-zinc-200 transition-colors';
+            } else {
+                btnEn.className = 'px-2.5 py-1.5 bg-zinc-900 text-white font-medium transition-colors';
+                btnEs.className = 'px-2.5 py-1.5 bg-transparent text-zinc-800 hover:bg-zinc-200 transition-colors';
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (uiTranslations[lang][key]) {
+                    el.textContent = uiTranslations[lang][key];
+                }
+            });
+
+            renderProjectsGrid();
+            if (currentProjectId) {
+                openCaseStudy(currentProjectId);
+            }
+        }
+
+        function toggleXray() {
+            xrayActive = !xrayActive;
+            document.body.classList.toggle('xray-mode', xrayActive);
+            const label = document.getElementById('xray-label');
+            label.textContent = xrayActive ? 'Guía Auto Layout: ON' : 'Guía Auto Layout: OFF';
+        }
+
+        function copyEmail() {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = 'hillerlo18@gmail.com';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            toastText.textContent = currentLang === 'es'
+                ? 'Correo copiado al portapapeles: hillerlo18@gmail.com'
+                : 'Email copied to clipboard: hillerlo18@gmail.com';
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        function openCVModal() {
+            document.getElementById('cv-modal').classList.remove('hidden');
+        }
+
+        function closeCVModal() {
+            document.getElementById('cv-modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            renderProjectsGrid();
+        };
+    </script>
+</body>
+</html>
